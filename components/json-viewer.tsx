@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useCallback, useMemo, useRef, useEffect } from "react"
-import { Copy, Sun, Moon, Search, Eye, Code, Shield, AlertTriangle } from "lucide-react"
+import { Copy, Sun, Moon, Search, Eye, Code, Shield, AlertTriangle, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from "next-themes"
@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge"
 import { useDebounce } from "@/hooks/use-debounce"
 
 export function JsonViewer() {
+  const [mounted, setMounted] = useState(false)
   const [input, setInput] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"tree" | "raw">("tree")
@@ -137,6 +138,16 @@ export function JsonViewer() {
     }
   }, [viewMode, parsedJson])
 
+  // Handle mounted state
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Return null on initial render to prevent hydration mismatch
+  if (!mounted) {
+    return null
+  }
+
   return (
     <div className="flex flex-col gap-4 h-[calc(100vh-120px)]">
       <div className="flex justify-between items-center">
@@ -144,9 +155,18 @@ export function JsonViewer() {
           <Shield className="h-5 w-5 text-zinc-500" />
           <h2 className="text-xl font-semibold">Secure JSON Viewer</h2>
         </div>
-        <Button variant="outline" size="icon" onClick={toggleTheme}>
-          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="icon" onClick={toggleTheme}>
+            {mounted && (theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />)}
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => window.open("https://mohammad.is-a.dev", "_blank", "noopener,noreferrer")}
+          >
+            <User className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">

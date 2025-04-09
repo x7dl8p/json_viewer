@@ -56,4 +56,19 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #444; /* Dark color for the scrollbar */
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Slightly lighter on hover */
+  }
+  
+  
 }

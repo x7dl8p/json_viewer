@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   },
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -36,6 +35,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'
